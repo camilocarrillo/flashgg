@@ -1,3 +1,6 @@
+//Indent header
+//header1
+//header2
 #ifndef FLASHgg_VertexCandidateMap_h
 #define FLASHgg_VertexCandidateMap_h
 
@@ -6,7 +9,7 @@
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h"
 
 namespace flashgg {
-  typedef std::map<edm::Ptr<reco::Vertex>,edm::PtrVector<pat::PackedCandidate> > VertexCandidateMap;
+typedef std::map<edm::Ptr<reco::Vertex>,edm::PtrVector<pat::PackedCandidate> > VertexCandidateMap;
 }
 
 #endif

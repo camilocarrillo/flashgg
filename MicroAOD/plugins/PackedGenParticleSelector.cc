@@ -1,10 +1,13 @@
+//Indent header
+//header1
+//header2
 /* \class CandViewRefSelector
- * 
+ *
  * Candidate Selector based on a configurable cut.
  * Reads a edm::View<Candidate> as input
  * and saves a OwnVector of clones.
  * Usage:
- * 
+ *
  * module selectedCands = CandViewSelector {
  *   InputTag src = myCollection
  *   string cut = "pt > 15.0"
@@ -19,9 +22,9 @@
 #include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
 
 typedef SingleObjectSelector<
-	edm::View<pat::PackedGenParticle>,
-  StringCutObjectSelector<pat::PackedGenParticle, true>,
-	std::vector<pat::PackedGenParticle>
-       > PackedGenParticleSelector;
+edm::View<pat::PackedGenParticle>,
+    StringCutObjectSelector<pat::PackedGenParticle, true>,
+    std::vector<pat::PackedGenParticle>
+    > PackedGenParticleSelector;
 
 DEFINE_FWK_MODULE(PackedGenParticleSelector);

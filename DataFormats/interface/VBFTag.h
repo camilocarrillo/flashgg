@@ -1,3 +1,6 @@
+//Indent header
+//header1
+//header2
 #ifndef FLASHgg_VBFTag_h
 #define FLASHgg_VBFTag_h
 
@@ -8,8 +11,8 @@
 
 namespace flashgg {
 
-  class VBFTag: public DiPhotonTagBase {
-  public:
+class VBFTag: public DiPhotonTagBase {
+public:
     VBFTag();
     ~VBFTag();
 
@@ -18,12 +21,12 @@ namespace flashgg {
     VBFTag* clone() const;
     const VBFDiPhoDiJetMVAResult VBFDiPhoDiJetMVA() const;
     const VBFMVAResult VBFMVA() const ;
-		const Jet leadingJet() const; //needs to be validated
-		const Jet subLeadingJet() const; //needs to be validated
+    const Jet leadingJet() const; //needs to be validated
+    const Jet subLeadingJet() const; //needs to be validated
 
-	private:
-		VBFDiPhoDiJetMVAResult vbfDiPhoDiJet_mva_result_;
-	};
+private:
+    VBFDiPhoDiJetMVAResult vbfDiPhoDiJet_mva_result_;
+};
 
 }
 

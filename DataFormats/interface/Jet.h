@@ -1,3 +1,6 @@
+//Indent header
+//header1
+//header2
 #ifndef FLASHgg_Jet_h
 #define FLASHgg_Jet_h
 
@@ -8,15 +11,15 @@
 
 namespace flashgg {
 
-  struct MinimalPileupJetIdentifier {
+struct MinimalPileupJetIdentifier {
     float RMS;
     float betaStar;
     int idFlag;
-  };
+};
 
-  class Jet : public pat::Jet {
+class Jet : public pat::Jet {
 
-  public:
+public:
     Jet();
     Jet(const pat::Jet &);
     ~Jet();
@@ -28,9 +31,9 @@ namespace flashgg {
     bool passesPuJetId(const edm::Ptr<DiPhotonCandidate> dipho, PileupJetIdentifier::Id level = PileupJetIdentifier::kLoose) const;
     float rms(const edm::Ptr<DiPhotonCandidate> dipho) const;
     float betaStar(const edm::Ptr<DiPhotonCandidate> dipho) const;
-  private:
+private:
     std::map<edm::Ptr<reco::Vertex>,MinimalPileupJetIdentifier> puJetId_;
-  };
+};
 }
 
 #endif

@@ -1,9 +1,12 @@
+//Indent header
+//header1
+//header2
 #include "flashgg/DataFormats/interface/DiPhotonTagBase.h"
 
 namespace flashgg {
 
-  class DiPhotonUntaggedCategory: public DiPhotonTagBase {
-  public:
+class DiPhotonUntaggedCategory: public DiPhotonTagBase {
+public:
     DiPhotonUntaggedCategory();
     ~DiPhotonUntaggedCategory();
 
@@ -12,9 +15,9 @@ namespace flashgg {
     virtual DiPhotonUntaggedCategory* clone() const;
 
 
-	private:
+private:
 
 
 
-	};
+};
 }
