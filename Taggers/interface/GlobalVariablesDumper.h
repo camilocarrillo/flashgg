@@ -1,3 +1,6 @@
+#Indent header
+#header1
+#header2
 #ifndef flashgg_GlobalVariablesDumper_h
 #define flashgg_GlobalVariablesDumper_h
 
@@ -8,25 +11,25 @@
 class TTree;
 
 namespace flashgg {
-	
-	class GlobalVariablesDumper {
-	public:
-		struct DumpCache {
-			float rho;
-			int   nvtx;
-		};
-		
-		GlobalVariablesDumper(const edm::ParameterSet & cfg);
-		~GlobalVariablesDumper();
-		
-		void bookTreeVariables(TTree * target, const std::map<std::string,std::string> & replacements);
 
-		void fill(const edm::EventBase & event);
-		
-	private:
-		edm::InputTag rhoTag_, vtxTag_;
-		DumpCache cache_;
-	};	
+class GlobalVariablesDumper {
+public:
+    struct DumpCache {
+        float rho;
+        int   nvtx;
+    };
+
+    GlobalVariablesDumper(const edm::ParameterSet & cfg);
+    ~GlobalVariablesDumper();
+
+    void bookTreeVariables(TTree * target, const std::map<std::string,std::string> & replacements);
+
+    void fill(const edm::EventBase & event);
+
+private:
+    edm::InputTag rhoTag_, vtxTag_;
+    DumpCache cache_;
+};
 
 }
 

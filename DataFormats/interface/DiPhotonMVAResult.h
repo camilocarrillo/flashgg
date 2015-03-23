@@ -1,3 +1,6 @@
+#Indent header
+#header1
+#header2
 #ifndef FLASHgg_DiPhotonMVAResult_h
 #define FLASHgg_DiPhotonMVAResult_h
 
@@ -6,9 +9,9 @@
 
 namespace flashgg {
 
-  class DiPhotonMVAResult {
+class DiPhotonMVAResult {
 
-  public:
+public:
     DiPhotonMVAResult();
     //    DiPhotonMVAResult(const DiPhotonMVAResult&) = default;  // C++11 only? Should happen automagically anyway
 
@@ -23,12 +26,14 @@ namespace flashgg {
     float sigmawv;
     float CosPhi;
     float vtxprob;
-		float mvaValue() const {return result;}
+    float mvaValue() const {
+        return result;
+    }
     // Output
     float result;
-  };
+};
 
-  typedef std::map<edm::Ptr<DiPhotonCandidate>,DiPhotonMVAResult> DiPhotonMVAResultMap;
+typedef std::map<edm::Ptr<DiPhotonCandidate>,DiPhotonMVAResult> DiPhotonMVAResultMap;
 
 }
 

@@ -1,3 +1,6 @@
+#Indent header
+#header1
+#header2
 #include "flashgg/Validation/interface/drawUtils.h"
 
 void compareHistos(TH1F* histo_new, TH1F* histo_old, std::string label_new,
@@ -8,10 +11,10 @@ void compareHistos(TH1F* histo_new, TH1F* histo_old, std::string label_new,
     std::string mkdir_command = "mkdir -p "+outputDir;
     system(mkdir_command.c_str());
     gStyle->SetOptStat("emr");
-    
+
     double xNorm = histo_new->Integral()/histo_old->Integral();
     histo_old -> Scale(xNorm);
-    
+
     histo_new -> GetXaxis() -> SetLabelSize(0);
     histo_new -> GetYaxis() -> SetLabelSize(0.04);
     histo_new -> GetXaxis() -> SetTitleSize(0.05);
@@ -119,7 +122,7 @@ void compareHistos(TH1F* histo_new, TH1F* histo_old, std::string label_new,
     st_ratio->SetTextColor(kBlack);
     st_ratio->Draw("sames");
 
-    
+
     cUp->cd();
     // double KSprob = histo_new -> KolmogorovTest(histo_old,"");
     // char KSbuffer[50];
@@ -137,9 +140,9 @@ void compareHistos(TH1F* histo_new, TH1F* histo_old, std::string label_new,
     latex -> SetTextFont(42);
     latex -> SetTextSize(0.04);
     latex -> Draw("same");
-    
+
     if(drawOption->Contains("png"))
-        c1 -> Print((outputDir+xTitle+".png").c_str(),"png");       
+        c1 -> Print((outputDir+xTitle+".png").c_str(),"png");
     if(drawOption->Contains("pdf"))
         c1 -> Print((outputDir+xTitle+".pdf").c_str(),"pdf");
     delete c1;

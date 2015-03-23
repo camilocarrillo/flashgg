@@ -1,3 +1,6 @@
+#Indent header
+#header1
+#header2
 #include <map>
 #include <vector>
 #include <string>
@@ -58,43 +61,44 @@ void ProcessSample(TTree* flashggTree, TTree* globeTree,
     //---create outdir if not exists
     std::string mkdir_command = "mkdir -p "+outputDir+sampleName;
     system(mkdir_command.c_str());
-    
+
     TFile* outFile = TFile::Open((outputDir+sampleName+"/comparison_plots.root").c_str(), "recreate");
-    //---variables loop---   
+    //---variables loop---
     for(unsigned int iVar=0; iVar<variables->size(); iVar++)
     {
         istringstream splitter(variables->at(iVar));
         string variable;
         int nbins=100;
         float min=0, max=100;
-        vector<string> tokens{istream_iterator<string>{splitter},
-                istream_iterator<string>{}};
+        vector<string> tokens {istream_iterator<string>{splitter},
+                               istream_iterator<string>{}
+                              };
 
-        variable = tokens.at(0); 
+        variable = tokens.at(0);
         if(tokens.size() > 1)
             nbins = stoi(tokens.at(1));
         if(tokens.size() > 2)
             min = stof(tokens.at(2));
         if(tokens.size() > 3)
-            max = stof(tokens.at(3));        
+            max = stof(tokens.at(3));
 
         //---categories loop---
         for(unsigned int iCat=0; iCat<categories->size(); iCat++)
-        {                
+        {
             //---draw vbf var only for vbf categories
             if(variable.find("dijet") != string::npos &&
-               categories->at(iCat).find("vbf") == string::npos &&
-               categories->at(iCat) != "all_cat")
+                    categories->at(iCat).find("vbf") == string::npos &&
+                    categories->at(iCat) != "all_cat")
                 continue;
-            
+
             outFile->cd();
             string h_name = categories->at(iCat)+"_"+variable;
             TH1F* h_new = new TH1F(TString(h_name+"_FLASHgg"), h_name.c_str(), nbins, min, max);
             TH1F* h_old =  new TH1F(TString(h_name+"_GLOBE"), h_name.c_str(), nbins, min, max);
-           
+
             TString cat_cut(categories->at(iCat));
             //---do not split in categories if cat_string is void
-            if(categories->at(iCat) != "all_cat")                
+            if(categories->at(iCat) != "all_cat")
                 cat_cut.Insert(cat_cut.Last('t')+1, "==");
             else
                 cat_cut = "1";
@@ -102,7 +106,7 @@ void ProcessSample(TTree* flashggTree, TTree* globeTree,
             flashggTree->Draw(TString(variable+">>"+h_name+"_FLASHgg"), cat_cut,"goff");
             globeTree->Draw(TString(variable+">>"+h_name+"_GLOBE"),
                             TString("full_weight*("+cat_cut+")"),"goff");
-            
+
             //---Draw histos to output files---
             //---skip empty categories
             if(h_new->GetEntries() == 0 && h_old->GetEntries() == 0)
@@ -133,10 +137,10 @@ int main(int argc, char* argv[])
     gStyle->SetPadTickY(1);
     gStyle->SetOptTitle(0);
     gStyle->SetOptFit(1);
-    
+
     gSystem->Load("libFWCoreFWLite");
-    AutoLibraryLoader::enable();   
-    
+    AutoLibraryLoader::enable();
+
     map<string, pair<TH1F*, TH1F*> > histos_container;
 
     if(argc < 2)
@@ -156,7 +160,7 @@ int main(int argc, char* argv[])
     //---out file option---
     string outputDir = filesOpt.getParameter<string>("outDir");
     if(outputDir == "")
-        outputDir = "$CMSSW_BASE/src/flashgg/GlobeComparison/plots/";    
+        outputDir = "$CMSSW_BASE/src/flashgg/GlobeComparison/plots/";
     //---draw option---
     TString drawOption(filesOpt.getParameter<string>("drawOpt"));
     //---categories option---
@@ -169,7 +173,7 @@ int main(int argc, char* argv[])
         untagged_cat = cat_param.getParameter<vector<string> >("untagged");
     if(untagged_cat.size() > 0 && untagged_cat.at(0) == "all")
         GetAllUntaggedCat(&categories);
-    else 
+    else
     {
         for(unsigned int iStr=0; iStr<untagged_cat.size(); iStr++)
             categories.push_back(untagged_cat.at(iStr));
@@ -177,7 +181,7 @@ int main(int argc, char* argv[])
     //---vbf
     vector<string> vbf_cat;
     if(doSplit && cat_param.exists("vbf"))
-        vbf_cat = cat_param.getParameter<vector<string> >("vbf");    
+        vbf_cat = cat_param.getParameter<vector<string> >("vbf");
     if(vbf_cat.size() > 0 && (vbf_cat.at(0) == "all" || vbf_cat.at(0) != ""))
         GetAllVBFCat(&categories);
     else
@@ -203,7 +207,7 @@ int main(int argc, char* argv[])
         TFile* flashggFileGGH = TFile::Open(filesOpt.getParameter<string>("flashggFileGGH").c_str());
         TTree* flashggTreeGGH = (TTree*)flashggFileGGH->Get(filesOpt.getParameter<string>("flashggTreeName").c_str());
         TTree* globeTreeGGH = (TTree*)globeFile->Get("ggh_m125_8TeV");
-        ProcessSample(flashggTreeGGH, globeTreeGGH, &variables, &categories, &drawOption,                      
+        ProcessSample(flashggTreeGGH, globeTreeGGH, &variables, &categories, &drawOption,
                       outputDir, string("ggh_m125"), doSplit);
     }
     if(processVBF)
@@ -211,7 +215,7 @@ int main(int argc, char* argv[])
         TFile* flashggFileVBF = TFile::Open(filesOpt.getParameter<string>("flashggFileVBF").c_str());
         TTree* flashggTreeVBF = (TTree*)flashggFileVBF->Get(filesOpt.getParameter<string>("flashggTreeName").c_str());
         TTree* globeTreeVBF = (TTree*)globeFile->Get("vbf_m125_8TeV");
-        ProcessSample(flashggTreeVBF, globeTreeVBF, &variables, &categories, &drawOption,                      
+        ProcessSample(flashggTreeVBF, globeTreeVBF, &variables, &categories, &drawOption,
                       outputDir, string("vbf_m125"), doSplit);
     }
     if(processWZH)
@@ -219,15 +223,15 @@ int main(int argc, char* argv[])
         TFile* flashggFileWZH = TFile::Open(filesOpt.getParameter<string>("flashggFileWZH").c_str());
         TTree* flashggTreeWZH = (TTree*)flashggFileWZH->Get(filesOpt.getParameter<string>("flashggTreeName").c_str());
         TTree* globeTreeWZH = (TTree*)globeFile->Get("wzh_m125_8TeV");
-        ProcessSample(flashggTreeWZH, globeTreeWZH, &variables, &categories, &drawOption,                      
-                      outputDir, string("wzh_m125"), doSplit);        
+        ProcessSample(flashggTreeWZH, globeTreeWZH, &variables, &categories, &drawOption,
+                      outputDir, string("wzh_m125"), doSplit);
     }
     if(processTTH)
     {
         TFile* flashggFileTTH = TFile::Open(filesOpt.getParameter<string>("flashggFileTTH").c_str());
         TTree* flashggTreeTTH = (TTree*)flashggFileTTH->Get(filesOpt.getParameter<string>("flashggTreeName").c_str());
         TTree* globeTreeTTH = (TTree*)globeFile->Get("tth_m125_8TeV");
-        ProcessSample(flashggTreeTTH, globeTreeTTH, &variables, &categories, &drawOption,                      
+        ProcessSample(flashggTreeTTH, globeTreeTTH, &variables, &categories, &drawOption,
                       outputDir, string("tth_m125"), doSplit);
     }
 }

@@ -1,3 +1,6 @@
+#Indent header
+#header1
+#header2
 #ifndef FLASHgg_VBFDiPhoDiJetMVAResult_h
 #define FLASHgg_VBFDiPhoDiJetMVAResult_h
 
@@ -7,31 +10,35 @@
 
 namespace flashgg {
 
-  class VBFDiPhoDiJetMVAResult {
+class VBFDiPhoDiJetMVAResult {
 
-  public:
+public:
     VBFDiPhoDiJetMVAResult();
- //    VBFDiPhoDiJetMVAResult(VBFMVAResult);
+//    VBFDiPhoDiJetMVAResult(VBFMVAResult);
     //    VBFDiPhoDiJetMVAResult(const VBFDiPhoDiJetMVAResult&) = default;  // C++11 only? Should happen automagically anyway
 
     // Input variables
-		float dijet_mva;
-		float dipho_mva;
-		float dipho_PToM;
+    float dijet_mva;
+    float dipho_mva;
+    float dipho_PToM;
 
-	
+
     // Output
     float vbfDiPhoDiJetMvaResult;
-	
-		// Also store previous dijet MVA result
-		VBFMVAResult vbfMvaResult;
-		
-		VBFMVAResult vbfMVAResult() const { return vbfMvaResult;}
-		float VBFDiPhoDiJetMVAValue() const { return vbfDiPhoDiJetMvaResult;}
 
-  };
+    // Also store previous dijet MVA result
+    VBFMVAResult vbfMvaResult;
 
-  typedef std::map<edm::Ptr<DiPhotonCandidate>,VBFDiPhoDiJetMVAResult> VBFDiPhoDiJetMVAResultMap;
+    VBFMVAResult vbfMVAResult() const {
+        return vbfMvaResult;
+    }
+    float VBFDiPhoDiJetMVAValue() const {
+        return vbfDiPhoDiJetMvaResult;
+    }
+
+};
+
+typedef std::map<edm::Ptr<DiPhotonCandidate>,VBFDiPhoDiJetMVAResult> VBFDiPhoDiJetMVAResultMap;
 
 }
 

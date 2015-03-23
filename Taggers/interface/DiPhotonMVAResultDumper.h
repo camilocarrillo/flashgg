@@ -1,3 +1,6 @@
+#Indent header
+#header1
+#header2
 #ifndef DiPhotonMVAResultDumper_h
 #define DiPhotonMVAResultDumper_h
 
@@ -5,8 +8,8 @@
 #include "flashgg/Taggers/interface/CollectionDumper.h"
 
 namespace flashgg {
-  typedef CollectionDumper<std::vector<DiPhotonMVAResult>> DiPhotonMVAResultDumper;
-  typedef CollectionDumper<std::vector<DiPhotonMVAResult>, DiPhotonMVAResult, CutBasedClassifier<DiPhotonMVAResult>> CutBasedDiPhotonMVAResultDumper;
+typedef CollectionDumper<std::vector<DiPhotonMVAResult>> DiPhotonMVAResultDumper;
+typedef CollectionDumper<std::vector<DiPhotonMVAResult>, DiPhotonMVAResult, CutBasedClassifier<DiPhotonMVAResult>> CutBasedDiPhotonMVAResultDumper;
 }
 
 #endif

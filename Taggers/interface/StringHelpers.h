@@ -1,3 +1,6 @@
+#Indent header
+#header1
+#header2
 #ifndef flashgg_StringHelpers_h
 #define flashgg_StringHelpers_h
 
@@ -6,11 +9,11 @@
 #include <map>
 
 
-namespace flashgg { 
-	std::string formatString(const std::string & inp, const std::map<std::string,std::string> & replacements);
+namespace flashgg {
+std::string formatString(const std::string & inp, const std::map<std::string,std::string> & replacements);
 
-	std::string replaceString(const std::string & inp, const std::string & src, const std::string & replace);
-	
+std::string replaceString(const std::string & inp, const std::string & src, const std::string & replace);
+
 }
 
 

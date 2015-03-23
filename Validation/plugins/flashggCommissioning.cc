@@ -1,9 +1,12 @@
+#Indent header
+#header1
+#header2
 
 // -*- C++ -*-
 //
 // Package:    MicroAODAnalyzers/flashggCommissioning
 // Class:      flashggCommissioning
-// 
+//
 /**\class flashggCommissioning flashggCommissioning.cc MicroAODAnalyzers/flashggCommissioning/plugins/flashggCommissioning.cc
 
  Description: [one line class summary]
@@ -46,34 +49,34 @@
 
 // **********************************************************************
 
-// define the structures used to create tree branches and fill the trees 
+// define the structures used to create tree branches and fill the trees
 
 // per-event tree:
 struct eventInfo {
-  
-  float nphoton;
+
+    float nphoton;
 
 };
 
 // per-photon tree:
 struct photonInfo {
 
-  float pt;
-  float eta;
-  float phi;
-  float energy;
-  float e1x5;
-  float e2x5;
-  float e3x3;
-  float e5x5;
-  float sigmaIetaIeta;
-  float sigmaEtaEta;
-  float maxEnergyXtal;
-  
-  float energyInitial;
-  float energyRegression;
-  float sigmaEOverE;
-  float energyTrue;
+    float pt;
+    float eta;
+    float phi;
+    float energy;
+    float e1x5;
+    float e2x5;
+    float e3x3;
+    float e5x5;
+    float sigmaIetaIeta;
+    float sigmaEtaEta;
+    float maxEnergyXtal;
+
+    float energyInitial;
+    float energyRegression;
+    float sigmaEOverE;
+    float energyTrue;
 
 
 
@@ -87,38 +90,38 @@ using namespace edm;
 // **********************************************************************
 
 class flashggCommissioning : public edm::EDAnalyzer {
-   public:
-      explicit flashggCommissioning(const edm::ParameterSet&);
-      ~flashggCommissioning();
+public:
+    explicit flashggCommissioning(const edm::ParameterSet&);
+    ~flashggCommissioning();
 
-      static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
+    static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
 
 
-   private:
+private:
 
-      edm::Service<TFileService> fs_;
+    edm::Service<TFileService> fs_;
 
-     
 
-      virtual void beginJob() override;
-      virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
-      virtual void endJob() override;
 
-      void initEventStructure();
-  
-      edm::EDGetTokenT<edm::View<flashgg::Photon> >            photonToken_;
-      edm::EDGetTokenT<edm::View<flashgg::DiPhotonCandidate> > diphotonToken_;
-      edm::EDGetTokenT<edm::View<reco::Vertex> >               vertexToken_; 
-      edm::EDGetTokenT<edm::View<pat::PackedCandidate> >       pfcandidateToken_;
-      edm::EDGetTokenT<edm::View<reco::GenParticle> > genParticleToken_;
-      edm::EDGetTokenT<edm::View<flashgg::Jet> > jetToken_;	
+    virtual void beginJob() override;
+    virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
+    virtual void endJob() override;
 
-      TTree* photonTree; 
-      photonInfo phoInfo;
-      // add all variables as private members
-      
-      flashgg::PhotonIdUtils phou;
-      
+    void initEventStructure();
+
+    edm::EDGetTokenT<edm::View<flashgg::Photon> >            photonToken_;
+    edm::EDGetTokenT<edm::View<flashgg::DiPhotonCandidate> > diphotonToken_;
+    edm::EDGetTokenT<edm::View<reco::Vertex> >               vertexToken_;
+    edm::EDGetTokenT<edm::View<pat::PackedCandidate> >       pfcandidateToken_;
+    edm::EDGetTokenT<edm::View<reco::GenParticle> > genParticleToken_;
+    edm::EDGetTokenT<edm::View<flashgg::Jet> > jetToken_;
+
+    TTree* photonTree;
+    photonInfo phoInfo;
+    // add all variables as private members
+
+    flashgg::PhotonIdUtils phou;
+
 
 
 };
@@ -138,21 +141,21 @@ class flashggCommissioning : public edm::EDAnalyzer {
 // constructors and destructor
 //
 flashggCommissioning::flashggCommissioning(const edm::ParameterSet& iConfig):
-  photonToken_(consumes<View<flashgg::Photon> >(iConfig.getUntrackedParameter<InputTag> ("PhotonTag", InputTag("flashggPhotons")))),
-  diphotonToken_(consumes<View<flashgg::DiPhotonCandidate> >(iConfig.getUntrackedParameter<InputTag> ("DiPhotonTag", InputTag("flashggDiPhotons")))),
-  vertexToken_(consumes<View<reco::Vertex> >(iConfig.getUntrackedParameter<InputTag> ("VertexTag", InputTag("offlineSlimmedPrimaryVertices")))),
-  pfcandidateToken_(consumes<View<pat::PackedCandidate> >(iConfig.getUntrackedParameter<InputTag> ("PFCandidatesTag", InputTag("packedPFCandidates")))),
-  genParticleToken_(consumes<View<reco::GenParticle> >(iConfig.getUntrackedParameter<InputTag> ("GenParticleTag", InputTag("prunedGenParticles")))),
-  jetToken_(consumes<View<flashgg::Jet> >(iConfig.getUntrackedParameter<InputTag> ("JetTag", InputTag("flashggJets"))))
+    photonToken_(consumes<View<flashgg::Photon> >(iConfig.getUntrackedParameter<InputTag> ("PhotonTag", InputTag("flashggPhotons")))),
+    diphotonToken_(consumes<View<flashgg::DiPhotonCandidate> >(iConfig.getUntrackedParameter<InputTag> ("DiPhotonTag", InputTag("flashggDiPhotons")))),
+    vertexToken_(consumes<View<reco::Vertex> >(iConfig.getUntrackedParameter<InputTag> ("VertexTag", InputTag("offlineSlimmedPrimaryVertices")))),
+    pfcandidateToken_(consumes<View<pat::PackedCandidate> >(iConfig.getUntrackedParameter<InputTag> ("PFCandidatesTag", InputTag("packedPFCandidates")))),
+    genParticleToken_(consumes<View<reco::GenParticle> >(iConfig.getUntrackedParameter<InputTag> ("GenParticleTag", InputTag("prunedGenParticles")))),
+    jetToken_(consumes<View<flashgg::Jet> >(iConfig.getUntrackedParameter<InputTag> ("JetTag", InputTag("flashggJets"))))
 {
- 
+
 }
 
 
 flashggCommissioning::~flashggCommissioning()
 {
- 
-  
+
+
 }
 
 
@@ -161,176 +164,176 @@ void
 flashggCommissioning::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
 
-  // ********************************************************************************
+    // ********************************************************************************
 
-  // access edm objects
+    // access edm objects
 
-  Handle<View<flashgg::Photon> > photons;
-  iEvent.getByToken(photonToken_,photons);
-  const PtrVector<flashgg::Photon>& photonPointers = photons->ptrVector();
+    Handle<View<flashgg::Photon> > photons;
+    iEvent.getByToken(photonToken_,photons);
+    const PtrVector<flashgg::Photon>& photonPointers = photons->ptrVector();
 
-  Handle<View<flashgg::DiPhotonCandidate> > diphotons;
-  iEvent.getByToken(diphotonToken_,diphotons);
-  const PtrVector<flashgg::DiPhotonCandidate>& diphotonPointers = diphotons->ptrVector();  
-   
-  Handle<View<reco::Vertex> > primaryVertices;
-  iEvent.getByToken(vertexToken_,primaryVertices);
-  const PtrVector<reco::Vertex>& pvPointers = primaryVertices->ptrVector();
+    Handle<View<flashgg::DiPhotonCandidate> > diphotons;
+    iEvent.getByToken(diphotonToken_,diphotons);
+    const PtrVector<flashgg::DiPhotonCandidate>& diphotonPointers = diphotons->ptrVector();
 
-  Handle<View<pat::PackedCandidate> > pfcandidates;
-  iEvent.getByToken(pfcandidateToken_,pfcandidates);
-  //const PtrVector<pat::PackedCandidate>& pfCandPointers = pfcandidates->ptrVector();
+    Handle<View<reco::Vertex> > primaryVertices;
+    iEvent.getByToken(vertexToken_,primaryVertices);
+    const PtrVector<reco::Vertex>& pvPointers = primaryVertices->ptrVector();
 
-  Handle<View<reco::GenParticle> > genParticles;
-  iEvent.getByToken(genParticleToken_,genParticles);
-  const PtrVector<reco::GenParticle>& gens = genParticles->ptrVector();
+    Handle<View<pat::PackedCandidate> > pfcandidates;
+    iEvent.getByToken(pfcandidateToken_,pfcandidates);
+    //const PtrVector<pat::PackedCandidate>& pfCandPointers = pfcandidates->ptrVector();
 
-  Handle<View<flashgg::Jet> > jets;
-  iEvent.getByToken(jetToken_,jets);
-  const PtrVector<flashgg::Jet>& jetPointers = jets->ptrVector();
+    Handle<View<reco::GenParticle> > genParticles;
+    iEvent.getByToken(genParticleToken_,genParticles);
+    const PtrVector<reco::GenParticle>& gens = genParticles->ptrVector();
 
-  for (unsigned int i = 0 ; i < diphotonPointers.size(); i++) {
-    for (unsigned int j = 0 ; j < jetPointers.size() ; j++) {
-      std::cout << " For jet " << j << ", diphoton " << i << " the RMS is " << jetPointers[j]->rms(diphotonPointers[i]) 
-		<< " the betaStar is " << jetPointers[j]->betaStar(diphotonPointers[i]) 
-		<< " and passesPuJetID is " << jetPointers[j]->passesPuJetId(diphotonPointers[i]) <<  std::endl;
+    Handle<View<flashgg::Jet> > jets;
+    iEvent.getByToken(jetToken_,jets);
+    const PtrVector<flashgg::Jet>& jetPointers = jets->ptrVector();
+
+    for (unsigned int i = 0 ; i < diphotonPointers.size(); i++) {
+        for (unsigned int j = 0 ; j < jetPointers.size() ; j++) {
+            std::cout << " For jet " << j << ", diphoton " << i << " the RMS is " << jetPointers[j]->rms(diphotonPointers[i])
+                      << " the betaStar is " << jetPointers[j]->betaStar(diphotonPointers[i])
+                      << " and passesPuJetID is " << jetPointers[j]->passesPuJetId(diphotonPointers[i]) <<  std::endl;
+        }
     }
-  }
 
-  if (pvPointers.size() > 0) {
-    for (unsigned int j = 0 ; j < jetPointers.size() ; j++) {
-      std::cout << " For jet " << j << ", vertex 0 the RMS  is " << jetPointers[j]->rms(pvPointers[0])
-                << " the betaStar is " << jetPointers[j]->betaStar(pvPointers[0])
-                << " and passesPuJetID is " << jetPointers[j]->passesPuJetId(pvPointers[0]) <<  std::endl;
+    if (pvPointers.size() > 0) {
+        for (unsigned int j = 0 ; j < jetPointers.size() ; j++) {
+            std::cout << " For jet " << j << ", vertex 0 the RMS  is " << jetPointers[j]->rms(pvPointers[0])
+                      << " the betaStar is " << jetPointers[j]->betaStar(pvPointers[0])
+                      << " and passesPuJetID is " << jetPointers[j]->passesPuJetId(pvPointers[0]) <<  std::endl;
+        }
     }
-  }
 
-  // cout << "size = " << pvPointers.size() << " " << pfCandPointers.size() << endl;
-  
-  // ********************************************************************************
+    // cout << "size = " << pvPointers.size() << " " << pfCandPointers.size() << endl;
 
-  for( size_t ipho = 0; ipho < photonPointers.size(); ipho++ ) {
+    // ********************************************************************************
 
-    initEventStructure();
+    for( size_t ipho = 0; ipho < photonPointers.size(); ipho++ ) {
 
-    Ptr<flashgg::Photon> phoPtr = photonPointers[ipho];
+        initEventStructure();
 
-    /*
-    cout << " In flashggCommissioning: photon pt = " << phoPtr->pt() << endl;
-    if (phoPtr->hasMatchedGenPhoton()) {
-      std::cout << "     match pt " << phoPtr->matchedGenPhoton()->pt() << std::endl;
-    } else {
-      std::cout << "     No gen match!" << std::endl;
-    }
-    */
+        Ptr<flashgg::Photon> phoPtr = photonPointers[ipho];
 
-    phoInfo.pt =  phoPtr->pt();
-    phoInfo.eta    = phoPtr->eta();
-    phoInfo.phi    = phoPtr->phi();
-    phoInfo.energy = phoPtr->energy();
-    phoInfo.e1x5   = phoPtr->e1x5();
-    phoInfo.e2x5   = phoPtr->e2x5();
-    phoInfo.e3x3   = phoPtr->e3x3();
-    phoInfo.e5x5   = phoPtr->e5x5();
-    phoInfo.sigmaIetaIeta = phoPtr->sigmaIetaIeta();
-    phoInfo.sigmaEtaEta   = phoPtr->sigmaEtaEta();
-    phoInfo.maxEnergyXtal = phoPtr->maxEnergyXtal();
+        /*
+        cout << " In flashggCommissioning: photon pt = " << phoPtr->pt() << endl;
+        if (phoPtr->hasMatchedGenPhoton()) {
+          std::cout << "     match pt " << phoPtr->matchedGenPhoton()->pt() << std::endl;
+        } else {
+          std::cout << "     No gen match!" << std::endl;
+        }
+        */
 
-    phoInfo.energyInitial = phoPtr->energyAtStep("initial");
-    phoInfo.energyRegression = phoPtr->energyAtStep("regression");
-    phoInfo.sigmaEOverE = phoPtr->sigEOverE();
+        phoInfo.pt =  phoPtr->pt();
+        phoInfo.eta    = phoPtr->eta();
+        phoInfo.phi    = phoPtr->phi();
+        phoInfo.energy = phoPtr->energy();
+        phoInfo.e1x5   = phoPtr->e1x5();
+        phoInfo.e2x5   = phoPtr->e2x5();
+        phoInfo.e3x3   = phoPtr->e3x3();
+        phoInfo.e5x5   = phoPtr->e5x5();
+        phoInfo.sigmaIetaIeta = phoPtr->sigmaIetaIeta();
+        phoInfo.sigmaEtaEta   = phoPtr->sigmaEtaEta();
+        phoInfo.maxEnergyXtal = phoPtr->maxEnergyXtal();
 
-    for( unsigned int genLoop =0 ; genLoop < gens.size(); genLoop++)
-      {
+        phoInfo.energyInitial = phoPtr->energyAtStep("initial");
+        phoInfo.energyRegression = phoPtr->energyAtStep("regression");
+        phoInfo.sigmaEOverE = phoPtr->sigEOverE();
 
-	if(  gens[genLoop]->pdgId() == 22 && gens[genLoop]->status() == 1 &&
-	     (deltaR(gens[genLoop]->eta(),gens[genLoop]->phi(),phoPtr->eta(),phoPtr->phi()) < 0.1) ) {
-	  phoInfo.energyTrue = gens[genLoop]->energy();
-	  break;
-	}
-      }
+        for( unsigned int genLoop =0 ; genLoop < gens.size(); genLoop++)
+        {
+
+            if(  gens[genLoop]->pdgId() == 22 && gens[genLoop]->status() == 1 &&
+                    (deltaR(gens[genLoop]->eta(),gens[genLoop]->phi(),phoPtr->eta(),phoPtr->phi()) < 0.1) ) {
+                phoInfo.energyTrue = gens[genLoop]->energy();
+                break;
+            }
+        }
 
 
-    // cout << " isolation = " << phou.pfIsoChgWrtVtx( phoPtr, pvPointers[0], pfCandPointers, 0.3, 0.01, 0.1, 0.01 ) << endl;
-    //cout << " isolation = " << phou.pfIsoGamma( phoPtr, pfCandPointers, 0.2, 0.0, 0.070, 0.015, 0.0, 0.0, 0.0) << endl;
-    
-    photonTree->Fill();
+        // cout << " isolation = " << phou.pfIsoChgWrtVtx( phoPtr, pvPointers[0], pfCandPointers, 0.3, 0.01, 0.1, 0.01 ) << endl;
+        //cout << " isolation = " << phou.pfIsoGamma( phoPtr, pfCandPointers, 0.2, 0.0, 0.070, 0.015, 0.0, 0.0, 0.0) << endl;
 
-  
-    
+        photonTree->Fill();
 
-  }   // end photon loop
 
-  // ********************************************************************************
 
-  for( size_t idipho = 0; idipho < diphotonPointers.size(); idipho++ ) {
 
-    //cout << "dummy loop to shut up warnings....leadingpho_pt =  " << diphotonPointers[idipho]->leadingPhoton()->pt() << endl;
+    }   // end photon loop
 
-  }  // end diphoton candidate loop
-  
+    // ********************************************************************************
+
+    for( size_t idipho = 0; idipho < diphotonPointers.size(); idipho++ ) {
+
+        //cout << "dummy loop to shut up warnings....leadingpho_pt =  " << diphotonPointers[idipho]->leadingPhoton()->pt() << endl;
+
+    }  // end diphoton candidate loop
+
 
 }
 
 
-void 
+void
 flashggCommissioning::beginJob()
 {
-  photonTree = fs_->make<TTree>("photonTree","per-photon tree");
-  photonTree->Branch("photonBranch",&phoInfo.pt,"phoPt/F:phoEta/F:phoPhi/F:phoE/F:phoE1x5/F:phoE2x5/F:phoE3x3/F:phoE5x5/F:phoSigmaIEtaIEta/F:phoSigmaEtaEta/F:phoEmax/F:energyInitial/F:energyRegression/F:sigmaEOverE/F:energyTrue/F");
+    photonTree = fs_->make<TTree>("photonTree","per-photon tree");
+    photonTree->Branch("photonBranch",&phoInfo.pt,"phoPt/F:phoEta/F:phoPhi/F:phoE/F:phoE1x5/F:phoE2x5/F:phoE3x3/F:phoE5x5/F:phoSigmaIEtaIEta/F:phoSigmaEtaEta/F:phoEmax/F:energyInitial/F:energyRegression/F:sigmaEOverE/F:energyTrue/F");
 }
 
-void 
-flashggCommissioning::endJob() 
+void
+flashggCommissioning::endJob()
 {
 }
 
 void
-flashggCommissioning::initEventStructure() 
+flashggCommissioning::initEventStructure()
 {
-  
-  phoInfo.pt  = -999;
-  phoInfo.eta = -999;
-  phoInfo.phi = -999;
-  phoInfo.energy = -999;
-  phoInfo.e1x5 = -999;
-  phoInfo.e2x5 = -999;
-  phoInfo.e3x3 = -999;
-  phoInfo.e5x5 = -999;
-  phoInfo.sigmaIetaIeta = -999;
-  phoInfo.sigmaEtaEta = -999;
-  phoInfo.maxEnergyXtal = -999;
 
-  phoInfo.energyInitial = -999;
-  phoInfo.energyRegression = -999;
-  phoInfo.sigmaEOverE = -999;
-  phoInfo.energyTrue = -999;
+    phoInfo.pt  = -999;
+    phoInfo.eta = -999;
+    phoInfo.phi = -999;
+    phoInfo.energy = -999;
+    phoInfo.e1x5 = -999;
+    phoInfo.e2x5 = -999;
+    phoInfo.e3x3 = -999;
+    phoInfo.e5x5 = -999;
+    phoInfo.sigmaIetaIeta = -999;
+    phoInfo.sigmaEtaEta = -999;
+    phoInfo.maxEnergyXtal = -999;
+
+    phoInfo.energyInitial = -999;
+    phoInfo.energyRegression = -999;
+    phoInfo.sigmaEOverE = -999;
+    phoInfo.energyTrue = -999;
 }
 
 
 /*
-void 
+void
 flashggCommissioning::beginRun(edm::Run const&, edm::EventSetup const&)
 {
 }
 */
 
 /*
-void 
+void
 flashggCommissioning::endRun(edm::Run const&, edm::EventSetup const&)
 {
 }
 */
 
 /*
-void 
+void
 flashggCommissioning::beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
 {
 }
 */
 
 /*
-void 
+void
 flashggCommissioning::endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
 {
 }
@@ -338,11 +341,11 @@ flashggCommissioning::endLuminosityBlock(edm::LuminosityBlock const&, edm::Event
 
 void
 flashggCommissioning::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
-  //The following says we do not know what parameters are allowed so do no validation
-  // Please change this to state exactly what you do use, even if it is no parameters
-  edm::ParameterSetDescription desc;
-  desc.setUnknown();
-  descriptions.addDefault(desc);
+    //The following says we do not know what parameters are allowed so do no validation
+    // Please change this to state exactly what you do use, even if it is no parameters
+    edm::ParameterSetDescription desc;
+    desc.setUnknown();
+    descriptions.addDefault(desc);
 }
 
 
