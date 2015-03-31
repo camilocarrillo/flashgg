@@ -1,3 +1,11 @@
+// Local Variables:
+// mode:c++
+// indent-tabs-mode:nil
+// tab-width:4
+// c-basic-offset:4
+// End:
+// vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+
 #ifndef FLASHgg_VHLooseTag_h
 #define FLASHgg_VHLooseTag_h
 
@@ -9,32 +17,33 @@
 
 namespace flashgg {
 
-	class VHLooseTag: public DiPhotonTagBase {
-		public:
-			VHLooseTag();
-                        VHLooseTag(edm::Ptr<DiPhotonCandidate>,edm::Ptr<DiPhotonMVAResult>);
-			VHLooseTag(edm::Ptr<DiPhotonCandidate>,DiPhotonMVAResult);
-			~VHLooseTag();
+    class VHLooseTag: public DiPhotonTagBase
+    {
+    public:
+        VHLooseTag();
+        VHLooseTag( edm::Ptr<DiPhotonCandidate>, edm::Ptr<DiPhotonMVAResult> );
+        VHLooseTag( edm::Ptr<DiPhotonCandidate>, DiPhotonMVAResult );
+        ~VHLooseTag();
 
-                const std::vector<edm::Ptr<pat::Muon> > muons() const { return Muons_;}
-		const std::vector<edm::Ptr<flashgg::Electron> > electrons() const {return Electrons_;}
-		const std::vector<edm::Ptr<Jet> > jets() const { return Jets_;}
-		const std::vector<edm::Ptr<pat::MET> > met() const { return MET_;} 
+        const std::vector<edm::Ptr<pat::Muon> > muons() const { return Muons_;}
+        const std::vector<edm::Ptr<flashgg::Electron> > electrons() const {return Electrons_;}
+        const std::vector<edm::Ptr<Jet> > jets() const { return Jets_;}
+        const std::vector<edm::Ptr<pat::MET> > met() const { return MET_;}
 
-		void setJets(std::vector<edm::Ptr<Jet> > Jets) { Jets_ = Jets; }
-		void setMuons(std::vector<edm::Ptr<pat::Muon> >Muons) {Muons_ = Muons;}
-		void setMET(std::vector<edm::Ptr<pat::MET> > MET) {MET_ = MET;}
-		void setElectrons(std::vector<edm::Ptr<Electron> > Electrons) {Electrons_ = Electrons;}
+        void setJets( std::vector<edm::Ptr<Jet> > Jets ) { Jets_ = Jets; }
+        void setMuons( std::vector<edm::Ptr<pat::Muon> >Muons ) {Muons_ = Muons;}
+        void setMET( std::vector<edm::Ptr<pat::MET> > MET ) {MET_ = MET;}
+        void setElectrons( std::vector<edm::Ptr<Electron> > Electrons ) {Electrons_ = Electrons;}
 
-		VHLooseTag* clone() const;
+        VHLooseTag *clone() const;
 
-                private:
-                std::vector<edm::Ptr<pat::Muon> > Muons_;  
-		std::vector<edm::Ptr<Electron> > Electrons_;
-		std::vector<edm::Ptr<Jet> > Jets_;
-		std::vector<edm::Ptr<pat::MET> > MET_;
-	};
-} 
+    private:
+        std::vector<edm::Ptr<pat::Muon> > Muons_;
+        std::vector<edm::Ptr<Electron> > Electrons_;
+        std::vector<edm::Ptr<Jet> > Jets_;
+        std::vector<edm::Ptr<pat::MET> > MET_;
+    };
+}
 
-#endif 
+#endif
 

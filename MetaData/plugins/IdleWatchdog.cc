@@ -1,11 +1,19 @@
+// Local Variables:
+// mode:c++
+// indent-tabs-mode:nil
+// tab-width:4
+// c-basic-offset:4
+// End:
+// vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+
 // -*- C++ -*-
 //
 // Package:    IdleWatchdog
 // Class:      IdleWatchdog
-// 
+//
 /**\class IdleWatchdog IdleWatchdog.cc CommonTools/UtilAlgos/plugins/IdleWatchdog.cc
 
-Description: An event counter that can store the number of events in the lumi block 
+Description: An event counter that can store the number of events in the lumi block
 
 */
 
@@ -30,22 +38,23 @@ Description: An event counter that can store the number of events in the lumi bl
 
 #include "TStopwatch.h"
 
-class IdleWatchdog : public edm::EDAnalyzer {
+class IdleWatchdog : public edm::EDAnalyzer
+{
 public:
-	explicit IdleWatchdog(const edm::ParameterSet&);
-	~IdleWatchdog();
-	
+    explicit IdleWatchdog( const edm::ParameterSet & );
+    ~IdleWatchdog();
+
 private:
-	virtual void analyze(const edm::Event &, const edm::EventSetup&);
-	virtual void respondToOpenInputFile(edm::FileBlock const&);
-        void check();
-	void reset();
-	
-	double minIdleFraction_;
-	int checkEvery_, tolerance_;
-	int nFailures_, ievent_;
-	
-	TStopwatch stopWatch_;
+    virtual void analyze( const edm::Event &, const edm::EventSetup & );
+    virtual void respondToOpenInputFile( edm::FileBlock const & );
+    void check();
+    void reset();
+
+    double minIdleFraction_;
+    int checkEvery_, tolerance_;
+    int nFailures_, ievent_;
+
+    TStopwatch stopWatch_;
 };
 
 
@@ -55,63 +64,63 @@ using namespace std;
 
 
 
-IdleWatchdog::IdleWatchdog(const edm::ParameterSet& iConfig) :
-	minIdleFraction_(iConfig.getUntrackedParameter<double>("minIdleFraction",0.2)),
-	checkEvery_(iConfig.getUntrackedParameter<int>("checkEvery",1000)),
-	tolerance_(iConfig.getUntrackedParameter<int>("tolerance",5))
+IdleWatchdog::IdleWatchdog( const edm::ParameterSet &iConfig ) :
+    minIdleFraction_( iConfig.getUntrackedParameter<double>( "minIdleFraction", 0.2 ) ),
+    checkEvery_( iConfig.getUntrackedParameter<int>( "checkEvery", 1000 ) ),
+    tolerance_( iConfig.getUntrackedParameter<int>( "tolerance", 5 ) )
 {
-	
+
 }
 
 
-IdleWatchdog::~IdleWatchdog(){}
+IdleWatchdog::~IdleWatchdog() {}
 
 
 void
-IdleWatchdog::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) 
+IdleWatchdog::analyze( const edm::Event &iEvent, const edm::EventSetup &iSetup )
 {
-	/// cout << ievent_ << " " << checkEvery_ << " " << nFailures_ << " " << tolerance_ << " " << minIdleFraction_ << endl;
-	if( ievent_ % checkEvery_ == 0 ) {
-		check();
-	}
-	++ievent_;
-	return;
+    /// cout << ievent_ << " " << checkEvery_ << " " << nFailures_ << " " << tolerance_ << " " << minIdleFraction_ << endl;
+    if( ievent_ % checkEvery_ == 0 ) {
+        check();
+    }
+    ++ievent_;
+    return;
 }
 
-void IdleWatchdog::respondToOpenInputFile(edm::FileBlock const&)
+void IdleWatchdog::respondToOpenInputFile( edm::FileBlock const & )
 {
-	reset();
+    reset();
 }
 
 
 void IdleWatchdog::check()
 {
-	/// cout << "checking " << endl;
-	stopWatch_.Stop();
-	float cputime  = stopWatch_.CpuTime();
-	float realtime = stopWatch_.RealTime();
-	
-	/// std::cout << cputime << " " << realtime << std::endl;
-	if( cputime / realtime < minIdleFraction_ ) {
-		--nFailures_;
-	} else {
-		nFailures_ = tolerance_;
-	}
-	
-	if( nFailures_ == 0 ) {
-		cerr << "too inefficient: " << minIdleFraction_ << " " << tolerance_ << " aborting " << endl;
-		exit(99);
-	}
-	stopWatch_.Start();
+    /// cout << "checking " << endl;
+    stopWatch_.Stop();
+    float cputime  = stopWatch_.CpuTime();
+    float realtime = stopWatch_.RealTime();
+
+    /// std::cout << cputime << " " << realtime << std::endl;
+    if( cputime / realtime < minIdleFraction_ ) {
+        --nFailures_;
+    } else {
+        nFailures_ = tolerance_;
+    }
+
+    if( nFailures_ == 0 ) {
+        cerr << "too inefficient: " << minIdleFraction_ << " " << tolerance_ << " aborting " << endl;
+        exit( 99 );
+    }
+    stopWatch_.Start();
 }
 
 void IdleWatchdog::reset()
 {
-	ievent_ = 0;
-	nFailures_ = tolerance_;
-	stopWatch_.Stop();
-	stopWatch_.Start();
+    ievent_ = 0;
+    nFailures_ = tolerance_;
+    stopWatch_.Stop();
+    stopWatch_.Start();
 }
 
 //define this as a plug-in
-DEFINE_FWK_MODULE(IdleWatchdog);
+DEFINE_FWK_MODULE( IdleWatchdog );

@@ -1,3 +1,11 @@
+// Local Variables:
+// mode:c++
+// indent-tabs-mode:nil
+// tab-width:4
+// c-basic-offset:4
+// End:
+// vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+
 #ifndef FLASHgg_VBFDiPhoDiJetMVAResult_h
 #define FLASHgg_VBFDiPhoDiJetMVAResult_h
 
@@ -7,31 +15,32 @@
 
 namespace flashgg {
 
-  class VBFDiPhoDiJetMVAResult {
+    class VBFDiPhoDiJetMVAResult
+    {
 
-  public:
-    VBFDiPhoDiJetMVAResult();
- //    VBFDiPhoDiJetMVAResult(VBFMVAResult);
-    //    VBFDiPhoDiJetMVAResult(const VBFDiPhoDiJetMVAResult&) = default;  // C++11 only? Should happen automagically anyway
+    public:
+        VBFDiPhoDiJetMVAResult();
+//    VBFDiPhoDiJetMVAResult(VBFMVAResult);
+        //    VBFDiPhoDiJetMVAResult(const VBFDiPhoDiJetMVAResult&) = default;  // C++11 only? Should happen automagically anyway
 
-    // Input variables
-		float dijet_mva;
-		float dipho_mva;
-		float dipho_PToM;
+        // Input variables
+        float dijet_mva;
+        float dipho_mva;
+        float dipho_PToM;
 
-	
-    // Output
-    float vbfDiPhoDiJetMvaResult;
-	
-		// Also store previous dijet MVA result
-		VBFMVAResult vbfMvaResult;
-		
-		VBFMVAResult vbfMVAResult() const { return vbfMvaResult;}
-		float VBFDiPhoDiJetMVAValue() const { return vbfDiPhoDiJetMvaResult;}
 
-  };
+        // Output
+        float vbfDiPhoDiJetMvaResult;
 
-  typedef std::map<edm::Ptr<DiPhotonCandidate>,VBFDiPhoDiJetMVAResult> VBFDiPhoDiJetMVAResultMap;
+        // Also store previous dijet MVA result
+        VBFMVAResult vbfMvaResult;
+
+        VBFMVAResult vbfMVAResult() const { return vbfMvaResult;}
+        float VBFDiPhoDiJetMVAValue() const { return vbfDiPhoDiJetMvaResult;}
+
+    };
+
+    typedef std::map<edm::Ptr<DiPhotonCandidate>, VBFDiPhoDiJetMVAResult> VBFDiPhoDiJetMVAResultMap;
 
 }
 

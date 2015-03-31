@@ -1,4 +1,12 @@
-#ifndef LEPTON_SELECTION 
+// Local Variables:
+// mode:c++
+// indent-tabs-mode:nil
+// tab-width:4
+// c-basic-offset:4
+// End:
+// vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+
+#ifndef LEPTON_SELECTION
 #define LEPTON_SELECTION
 #include "FWCore/Framework/interface/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
@@ -33,11 +41,15 @@ using namespace edm;
 
 namespace flashgg {
 
-	std::vector<edm::Ptr<pat::Muon> > selectMuons(const std::vector<edm::Ptr<pat::Muon> >& muonPointers,Ptr<flashgg::DiPhotonCandidate> dipho, const std::vector<edm::Ptr<reco::Vertex> >& vertexPointers, double muonEtaThreshold, double muonPtThreshold, double muPFIsoSumRelThreshold, double dRPhoLeadMuonThreshold, double dRPhoSubLeadMuonThreshold);
+    std::vector<edm::Ptr<pat::Muon> > selectMuons( const std::vector<edm::Ptr<pat::Muon> > &muonPointers, Ptr<flashgg::DiPhotonCandidate> dipho,
+            const std::vector<edm::Ptr<reco::Vertex> > &vertexPointers, double muonEtaThreshold, double muonPtThreshold, double muPFIsoSumRelThreshold,
+            double dRPhoLeadMuonThreshold, double dRPhoSubLeadMuonThreshold );
 
-	std::vector<edm::Ptr<Electron> > selectElectrons(const std::vector<edm::Ptr<flashgg::Electron> >& ElectronPointers, const std::vector<edm::Ptr<reco::Vertex> >& vertexPointers,double ElectronPtThreshold ,double DeltaRTrkElec ,double TransverseImpactParam,double LongitudinalImpactParam, double NonTrigMVAThreshold, double IsoThreshold, double NumOfMissingHitsThreshold, vector<double> EtaCuts);
+    std::vector<edm::Ptr<Electron> > selectElectrons( const std::vector<edm::Ptr<flashgg::Electron> > &ElectronPointers,
+            const std::vector<edm::Ptr<reco::Vertex> > &vertexPointers, double ElectronPtThreshold , double DeltaRTrkElec , double TransverseImpactParam,
+            double LongitudinalImpactParam, double NonTrigMVAThreshold, double IsoThreshold, double NumOfMissingHitsThreshold, vector<double> EtaCuts );
 
-	Ptr<reco::Vertex> chooseElectronVertex(Ptr<flashgg::Electron> & elec,const std::vector<edm::Ptr<reco::Vertex> > & vertexPopinters);
+    Ptr<reco::Vertex> chooseElectronVertex( Ptr<flashgg::Electron> &elec, const std::vector<edm::Ptr<reco::Vertex> > &vertexPopinters );
 
 }
 
